@@ -1,0 +1,26 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="删除个体" />
+          <option value="添加个体" />
+          <option value="Mydatabase" />
+          <option value="page_2" />
+          <option value="图片分析截切集合" />
+          <option value="删除个体_sign" />
+          <option value="人脸搜索_sign" />
+          <option value="多人脸检测" />
+          <option value="多人脸检测_sign" />
+          <option value="人脸搜索" />
+          <option value="剪切图片" />
+          <option value="放大图片" />
+          <option value="page_3" />
+          <option value="page_1" />
+          <option value="page_4" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

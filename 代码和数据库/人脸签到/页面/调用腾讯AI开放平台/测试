@@ -1,0 +1,120 @@
+import tkinter
+import tkinter.filedialog
+import time
+import Mydatabase
+from tkinter import *
+from tkinter.filedialog import askopenfilename
+from PIL import Image, ImageTk
+import requests
+import base64
+import 多人脸检测
+import 多人脸检测_sign
+import 人脸搜索
+import 人脸搜索_sign
+import 剪切图片
+import 放大图片
+import time
+import tkinter.messagebox
+
+def choosepic_1():
+    global path_1
+    global e_1
+    global l_1
+    global path_
+
+
+    path_ = askopenfilename()
+    path_1.set(path_)
+    img_open = Image.open(path_)
+    x, y = img_open.size
+    x = int(x*0.5)
+    y = int(y*0.5)
+    img_open = img_open.resize((x, y), Image.ANTIALIAS)
+    img = ImageTk.PhotoImage(img_open)
+    l_1.config(image=img)
+    l_1.image = img
+    print("aaa")
+
+# 覆盖窗口
+def Cover(win):
+    label_bg = tkinter.Label(win, text="", bg="#F7F7F7")
+    label_bg.place(x=0, y=0, width=1000, height=1000)
+
+#自动创建文件夹
+def mkdir(path):
+    #引入模块
+    import os
+    #去除首位空格
+    path = path.strip()
+    #去除尾部\符号
+    path=path.rstrip("\\")
+    #判断路径是否存在
+    #存在 True
+    #不存在 False
+    isExists=os.path.exists(path)
+    #判断结果
+    if not isExists:
+        #如果不存在则创建目录
+        #创建目录操作目录
+        os.makedirs(path)
+        print(path+'创建成功')
+        return True
+    else:
+        #如果目录存在则不创建目录
+        print(path+'目录已存在')
+        return False
+
+
+# 处理数据
+def take_date(win, path, path_goal, class_id):
+    #新建文件夹
+    mkdir("D:\\qttc\\")
+    tkinter.messagebox.showinfo("提示！", "请耐心等待分析！！！")
+    import 图片分析截切集合
+    res = 图片分析截切集合.Find_person(path, path_goal, class_id)
+    print("sdfsdf", res)
+
+    Mydatabase.update_student(res, class_id)
+    import page_3
+    page_3.page_3_win(win, class_id)
+
+
+def page_2_win(body, class_id):
+    body.title("班级签到: "+class_id)
+    body.maxsize(700, 500)
+    body.minsize(700, 500)
+
+    # 覆盖函数
+    Cover(body)
+
+    global path_1
+    global path_
+    global e_1
+    global l_1
+
+    path_1 = StringVar()
+    b_1 = Button(body, text='请上传班级课堂照片', command=choosepic_1)
+    b_1.place(x=20, y=15, width=120, height=25)
+
+    b_2 = Button(body, text='分析图片',  font=('黑体', 15), command=lambda: take_date(body, str(path_), 'D:/qttc', class_id))
+    b_2.place(x=530, y=345, width=100, height=50)
+
+    import page_1
+    b_3 = Button(body, text='返回主页', font=('黑体', 15), command=lambda: page_1.page_win(body))
+    b_3.place(x=530, y=415, width=100, height=50)
+
+    e_1 = Entry(body, state='readonly', text=path_1)
+    e_1.place(x=150, y=15, width=250, height=25)
+
+    l_1 = Label(body, bg="#FFFFFF")
+    l_1.place(x=20, y=55, width=450, height=430)
+
+
+if __name__ == '__main__':
+    win = tkinter.Tk()
+    page_2_win(win, '001')
+    win.mainloop()
+
+
+
+
